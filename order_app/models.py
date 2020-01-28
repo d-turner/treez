@@ -33,9 +33,10 @@ class Store(DjangoModels.Model):
 
 class InventoryItem(DjangoModels.Model):
 
+    CURRENCY = OrderChoices.CURRENCY_CHOICES
     name = DjangoModels.CharField(max_length=255)
     description = DjangoModels.TextField(blank=True, null=True)
-    currency = DjangoModels.CharField(max_length=4, choices=OrderChoices.CURRENCY_CHOICES)
+    currency = DjangoModels.CharField(max_length=4, choices=CURRENCY)
     amount = DjangoModels.DecimalField(
         max_digits=ROUNDED_DIGITS,
         decimal_places=ROUNDED_DECIMALS
@@ -53,11 +54,12 @@ class InventoryItem(DjangoModels.Model):
 
 
 class Order(DjangoModels.Model):
-
+    
+    STATUS = OrderChoices.ORDER_STATUS_CHOICES
     customer_email = DjangoModels.EmailField(max_length=255, verbose_name='Email Address', null=False, blank=False)
     created_at = DjangoModels.DateTimeField(auto_now_add=True)
     checked_out_at = DjangoModels.DateTimeField(null=True, blank=True)
-    status = DjangoModels.CharField(max_length=4, choices=OrderChoices.ORDER_STATUS_CHOICES)
+    status = DjangoModels.CharField(max_length=4, choices=STATUS)
 
     class Meta(object):
         db_table = u'orders_order'
