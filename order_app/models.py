@@ -36,7 +36,7 @@ class InventoryItem(DjangoModels.Model):
     CURRENCY = OrderChoices.CURRENCY_CHOICES
     name = DjangoModels.CharField(max_length=255)
     description = DjangoModels.TextField(blank=True, null=True)
-    currency = DjangoModels.CharField(max_length=4, choices=CURRENCY)
+    currency = DjangoModels.CharField(max_length=20, choices=CURRENCY)
     amount = DjangoModels.DecimalField(
         max_digits=ROUNDED_DIGITS,
         decimal_places=ROUNDED_DECIMALS
@@ -53,13 +53,42 @@ class InventoryItem(DjangoModels.Model):
         )
 
 
+class PurchasedItem(DjangoModels.Model):
+
+    CURRENCY = OrderChoices.CURRENCY_CHOICES
+    name = DjangoModels.CharField(max_length=255)
+    description = DjangoModels.TextField(blank=True, null=True)
+    currency = DjangoModels.CharField(max_length=20, choices=CURRENCY)
+    amount = DjangoModels.DecimalField(
+        max_digits=ROUNDED_DIGITS,
+        decimal_places=ROUNDED_DECIMALS
+    )
+    quantity = DjangoModels.PositiveIntegerField(default=0)
+    order = DjangoModels.ForeignKey(
+        'Order',
+        related_name='order_items',
+        on_delete=DjangoModels.PROTECT,
+        blank=True,
+        null=True
+    )
+
+    class Meta(object):
+        db_table = u'orders_purchased'
+
+    def __str__(self):
+        return u'#{id} PurchasedInventoryItem - {name}'.format(
+            id=self.id,
+            name=self.name
+        )
+
+
 class Order(DjangoModels.Model):
-    
+
     STATUS = OrderChoices.ORDER_STATUS_CHOICES
     customer_email = DjangoModels.EmailField(max_length=255, verbose_name='Email Address', null=False, blank=False)
     created_at = DjangoModels.DateTimeField(auto_now_add=True)
     checked_out_at = DjangoModels.DateTimeField(null=True, blank=True)
-    status = DjangoModels.CharField(max_length=4, choices=STATUS)
+    status = DjangoModels.CharField(max_length=20, choices=STATUS)
 
     class Meta(object):
         db_table = u'orders_order'

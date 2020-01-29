@@ -28,3 +28,4 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(OrderModels.Store, StoreAdmin)
 admin.site.register(OrderModels.InventoryItem, InventoryItemAdmin)
 admin.site.register(OrderModels.Order, OrderAdmin)
+admin.site.register(OrderModels.PurchasedItem)

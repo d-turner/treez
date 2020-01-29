@@ -48,8 +48,8 @@ router.register(r'users', UserViewSet)
 #############
 # Order APIs #
 #############
-router.register(r'stores/items', OrderViewSets.InventoryItemViewSet)
-router.register(r'stores', OrderViewSets.StoreViewSet)
+router.register(r'inventories/items', OrderViewSets.InventoryItemViewSet)
+router.register(r'inventories', OrderViewSets.StoreViewSet)
 router.register(r'orders', OrderViewSets.OrderViewSet)
 
 
